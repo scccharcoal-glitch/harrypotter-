@@ -1,0 +1,2 @@
+ALTER TABLE "Category"
+ADD COLUMN "seoContent" TEXT NOT NULL DEFAULT '';

@@ -1,0 +1,253 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0e0b0a;
+  --surface: #1a1412;
+  --surface-muted: #241c19;
+  --border: #33281f;
+  --ink: #f1e9de;
+  --ink-muted: #b3a390;
+  --brand: #d4af37;
+  --brand-dark: #b8860b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --font-sans: var(--font-kanit);
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--font-kanit), Arial, Helvetica, sans-serif;
+}
+
+.admin-shell input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+.admin-shell textarea,
+.admin-shell select {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.admin-shell input::placeholder,
+.admin-shell textarea::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.admin-rich-editor {
+  line-height: 1.75;
+}
+
+.admin-rich-editor:empty::before {
+  color: #94a3b8;
+  content: "เขียนเนื้อหาบทความ แล้วเลือกข้อความเพื่อจัดรูปแบบ...";
+  pointer-events: none;
+}
+
+.admin-rich-editor p,
+.admin-rich-editor ul,
+.admin-rich-editor ol {
+  margin-top: 0.75rem;
+}
+
+.admin-rich-editor h2,
+.admin-rich-editor h3 {
+  margin-top: 1rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.admin-rich-editor h2 {
+  font-size: 1.25rem;
+}
+
+.admin-rich-editor h3 {
+  font-size: 1.125rem;
+}
+
+.admin-rich-editor ul,
+.admin-rich-editor ol {
+  padding-left: 1.5rem;
+}
+
+.admin-rich-editor ul {
+  list-style: disc;
+}
+
+.admin-rich-editor ol {
+  list-style: decimal;
+}
+
+.admin-rich-editor a {
+  color: #e11d48;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.seo-rich-content h2,
+.seo-rich-content h3,
+.seo-rich-content h4 {
+  margin-top: 1.5rem;
+  color: var(--ink);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.seo-rich-content h2 {
+  font-size: 1.25rem;
+}
+
+.seo-rich-content h3 {
+  font-size: 1.125rem;
+}
+
+.seo-rich-content p,
+.seo-rich-content ul,
+.seo-rich-content ol,
+.seo-rich-content blockquote,
+.seo-rich-content img {
+  margin-top: 0.75rem;
+}
+
+.seo-rich-content > :first-child {
+  margin-top: 0;
+}
+
+.seo-rich-content ul,
+.seo-rich-content ol {
+  padding-left: 1.5rem;
+}
+
+.seo-rich-content ul {
+  list-style: disc;
+}
+
+.seo-rich-content ol {
+  list-style: decimal;
+}
+
+.seo-rich-content a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.seo-rich-content img {
+  height: auto;
+  max-width: 100%;
+  border-radius: 0.75rem;
+}
+
+.article-content {
+  color: var(--ink-muted);
+  font-size: 1rem;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.article-content > :first-child {
+  margin-top: 0;
+}
+
+.article-content p,
+.article-content ul,
+.article-content ol,
+.article-content blockquote,
+.article-content table,
+.article-content img {
+  margin-top: 1rem;
+}
+
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  color: var(--ink);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.article-content h2 {
+  margin-top: 2.25rem;
+  border-left: 4px solid var(--brand);
+  padding-left: 0.875rem;
+  font-size: 1.5rem;
+}
+
+.article-content h3 {
+  margin-top: 1.75rem;
+  font-size: 1.25rem;
+}
+
+.article-content h4 {
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+}
+
+.article-content ul,
+.article-content ol {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.article-content ul {
+  list-style: disc;
+}
+
+.article-content ol {
+  list-style: decimal;
+}
+
+.article-content li::marker {
+  color: var(--brand);
+}
+
+.article-content strong,
+.article-content b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.article-content a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-content blockquote {
+  border-left: 4px solid var(--brand);
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: var(--surface-muted);
+  padding: 1rem 1.25rem;
+}
+
+.article-content img {
+  height: auto;
+  max-width: 100%;
+  border-radius: 0.75rem;
+}
+
+.article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.925rem;
+}
+
+.article-content th,
+.article-content td {
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.article-content th {
+  background: var(--surface-muted);
+  color: var(--ink);
+}
+
+@media (min-width: 640px) {
+  .article-content {
+    font-size: 1.0625rem;
+  }
+}
