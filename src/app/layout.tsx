@@ -22,8 +22,9 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s | ดูแฮร์รี่พอตเตอร์",
     },
     description: settings.siteDescription,
-    // TODO: add this site's own Google Search Console verification.google value once
-    // registered — do not reuse another site's verification code.
+    verification: {
+      google: "VRNmRzjMdcTUkU_XR7ZHA5TtOeVr0oYV1qu8oFK4AEc",
+    },
     openGraph: {
       type: "website",
       locale: "th_TH",
