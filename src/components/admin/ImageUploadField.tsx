@@ -11,10 +11,12 @@ export function ImageUploadField({
   name,
   initialUrl,
   blobEnabled,
+  variant = "poster",
 }: {
   name: string;
   initialUrl?: string;
   blobEnabled: boolean;
+  variant?: "poster" | "landscape";
 }) {
   const [url, setUrl] = useState(initialUrl ?? "");
   const [isUploading, setIsUploading] = useState(false);
@@ -58,12 +60,18 @@ export function ImageUploadField({
   return (
     <div className="flex flex-col gap-2">
       {url && !previewFailed && (
-        <div className="relative h-40 w-28 overflow-hidden rounded-lg bg-slate-900">
+        <div
+          className={
+            variant === "landscape"
+              ? "relative aspect-video w-full max-w-2xl overflow-hidden rounded-xl bg-slate-900"
+              : "relative h-40 w-28 overflow-hidden rounded-lg bg-slate-900"
+          }
+        >
           <Image
             src={url}
             alt="ตัวอย่างรูปปก"
             fill
-            sizes="160px"
+            sizes={variant === "landscape" ? "(max-width: 1024px) 100vw, 640px" : "160px"}
             className="object-cover"
             onError={() => setPreviewFailed(true)}
           />
@@ -90,12 +98,18 @@ export function ImageUploadField({
           setError(null);
           setPreviewFailed(false);
         }}
-        placeholder="https://image.tmdb.org/... หรือวาง URL หน้าเรื่องในเว็บนี้ เช่น /title/moana-1108427"
+        placeholder={
+          variant === "landscape"
+            ? "วาง URL รูปปก หรือเลือกรูปจากเครื่อง"
+            : "https://image.tmdb.org/... หรือวาง URL หน้าเรื่องในเว็บนี้ เช่น /title/moana-1108427"
+        }
         aria-label="URL รูปโปสเตอร์ หรือ URL หน้าเรื่องในเว็บนี้"
         className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-100"
       />
       <p className="text-xs text-slate-400">
-        เว้นว่างไว้ได้ — ถ้าไม่ใส่รูปจะใช้รูปสำรองแทนและยังโพสต์ได้ปกติ ถ้าวาง URL หน้าเรื่องในเว็บนี้ ระบบจะดึงรูปปกของเรื่องนั้นมาใช้ให้อัตโนมัติตอนบันทึก
+        {variant === "landscape"
+          ? "รองรับ JPG, PNG, WEBP และ GIF ขนาดไม่เกิน 5 MB — แนะนำรูปแนวนอนอัตราส่วน 16:9"
+          : "เว้นว่างไว้ได้ — ถ้าไม่ใส่รูปจะใช้รูปสำรองแทนและยังโพสต์ได้ปกติ ถ้าวาง URL หน้าเรื่องในเว็บนี้ ระบบจะดึงรูปปกของเรื่องนั้นมาใช้ให้อัตโนมัติตอนบันทึก"}
       </p>
       {isUploading && <p className="text-xs text-slate-400">กำลังอัปโหลด...</p>}
       {error && <p className="text-xs text-rose-600">{error}</p>}

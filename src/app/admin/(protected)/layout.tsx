@@ -6,6 +6,7 @@ import { verifySessionToken, SESSION_COOKIE_NAME } from "@/lib/auth";
 const NAV_LINKS = [
   { href: "/admin", label: "แดชบอร์ด" },
   { href: "/admin/articles", label: "ภาพยนตร์" },
+  { href: "/admin/blog", label: "บทความ" },
   { href: "/admin/categories", label: "หมวดหมู่" },
   { href: "/admin/authors", label: "ผู้อัปโหลด" },
   { href: "/admin/redirects", label: "Redirect 301" },

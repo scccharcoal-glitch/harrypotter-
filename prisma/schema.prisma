@@ -72,3 +72,22 @@ model SiteSetting {
   key   String @id
   value String @db.Text
 }
+
+model BlogPost {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  title          String
+  excerpt        String   @db.Text
+  bodyHtml       String   @db.Text
+  coverImageUrl  String
+  coverImageAlt  String
+  category       String
+  tags           String[] @default([])
+  seoTitle       String?
+  seoDescription String?  @db.Text
+  publishedAt    DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  isPublished    Boolean  @default(false)
+
+  @@index([isPublished, publishedAt])
+}

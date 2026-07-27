@@ -29,6 +29,13 @@ export function Header({ categories, searchQuery = "" }: { categories: Category[
           >
             ตัวละคร
           </Link>
+          <Link
+            href="/blog"
+            prefetch={false}
+            className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium text-[var(--ink-muted)] transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--ink)]"
+          >
+            บทความ
+          </Link>
         </nav>
 
         <form
@@ -79,6 +86,13 @@ export function Header({ categories, searchQuery = "" }: { categories: Category[
           className="whitespace-nowrap rounded-full px-3 py-1 text-sm text-[var(--ink-muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--ink)]"
         >
           ตัวละคร
+        </Link>
+        <Link
+          href="/blog"
+          prefetch={false}
+          className="whitespace-nowrap rounded-full px-3 py-1 text-sm text-[var(--ink-muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--ink)]"
+        >
+          บทความ
         </Link>
       </nav>
     </header>

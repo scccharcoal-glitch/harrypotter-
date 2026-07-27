@@ -60,9 +60,14 @@ export async function Footer() {
             </div>
           )}
 
-          <a href="/sitemap.xml" className="font-medium text-[var(--ink)] transition-colors hover:text-[var(--brand)]">
-            Sitemap
-          </a>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link href="/blog" prefetch={false} className="font-medium text-[var(--ink)] transition-colors hover:text-[var(--brand)]">
+              บทความ
+            </Link>
+            <a href="/sitemap.xml" className="font-medium text-[var(--ink)] transition-colors hover:text-[var(--brand)]">
+              Sitemap
+            </a>
+          </div>
         </div>
 
         <p className="mt-6">&copy; {new Date().getFullYear()} ดูแฮร์รี่พอตเตอร์. All rights reserved.</p>
