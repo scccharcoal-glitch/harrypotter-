@@ -9,6 +9,7 @@ import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
 import { getPublishedBlogPostBySlug, getPublishedBlogPosts } from "@/lib/services/blog-posts";
 import { getAllCategories } from "@/lib/services/categories";
 import { getSiteUrl } from "@/lib/site-url";
+import { isAllowedImageHost } from "@/lib/image-host";
 
 export const revalidate = 60;
 
@@ -96,14 +97,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <div className="mx-auto max-w-5xl px-4">
             <div className="relative aspect-video overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-muted)]">
-              <Image
-                src={post.coverImageUrl}
-                alt={post.coverImageAlt}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 1024px"
-                className="object-cover"
-              />
+              {isAllowedImageHost(post.coverImageUrl) ? (
+                <Image
+                  src={post.coverImageUrl}
+                  alt={post.coverImageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  className="object-cover"
+                />
+              ) : (
+                // arbitrary admin-entered external host, not covered by next/image's allowlist
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={post.coverImageUrl} alt={post.coverImageAlt} className="absolute inset-0 h-full w-full object-cover" />
+              )}
             </div>
           </div>
 

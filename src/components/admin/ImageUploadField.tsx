@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { isAllowedImageHost } from "@/lib/image-host";
 
 // Mirrors MAX_UPLOAD_BYTES in src/lib/upload.ts — duplicated rather than imported
 // because that module pulls in Node-only APIs that can't ship to the client bundle.
@@ -67,14 +68,25 @@ export function ImageUploadField({
               : "relative h-40 w-28 overflow-hidden rounded-lg bg-slate-900"
           }
         >
-          <Image
-            src={url}
-            alt="ตัวอย่างรูปปก"
-            fill
-            sizes={variant === "landscape" ? "(max-width: 1024px) 100vw, 640px" : "160px"}
-            className="object-cover"
-            onError={() => setPreviewFailed(true)}
-          />
+          {isAllowedImageHost(url) ? (
+            <Image
+              src={url}
+              alt="ตัวอย่างรูปปก"
+              fill
+              sizes={variant === "landscape" ? "(max-width: 1024px) 100vw, 640px" : "160px"}
+              className="object-cover"
+              onError={() => setPreviewFailed(true)}
+            />
+          ) : (
+            // arbitrary external host, can't go through next/image's domain-restricted optimizer
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={url}
+              alt="ตัวอย่างรูปปก"
+              className="absolute inset-0 h-full w-full object-cover"
+              onError={() => setPreviewFailed(true)}
+            />
+          )}
         </div>
       )}
       <div>

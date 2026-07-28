@@ -6,6 +6,7 @@ import { Header } from "@/components/site/Header";
 import { formatThaiDate } from "@/lib/format-date";
 import { getPublishedBlogPosts } from "@/lib/services/blog-posts";
 import { getAllCategories } from "@/lib/services/categories";
+import { isAllowedImageHost } from "@/lib/image-host";
 
 export const revalidate = 60;
 
@@ -47,13 +48,23 @@ export default async function BlogPage() {
               >
                 <Link href={`/blog/${post.slug}`} prefetch={false} className="block">
                   <div className="relative aspect-video overflow-hidden bg-[var(--surface-muted)]">
-                    <Image
-                      src={post.coverImageUrl}
-                      alt={post.coverImageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition duration-500 group-hover:scale-105"
-                    />
+                    {isAllowedImageHost(post.coverImageUrl) ? (
+                      <Image
+                        src={post.coverImageUrl}
+                        alt={post.coverImageAlt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      // arbitrary admin-entered external host, not covered by next/image's allowlist
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={post.coverImageUrl}
+                        alt={post.coverImageAlt}
+                        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    )}
                   </div>
                   <div className="p-5">
                     <div className="flex items-center gap-2 text-xs text-[var(--ink-muted)]">
