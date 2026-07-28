@@ -8,11 +8,16 @@ import { sanitizeRichHtml } from "@/lib/sanitize-rich-html";
 const BLOG_PLACEHOLDER_IMAGE = "/placeholder-poster.svg";
 
 function slugify(value: string): string {
+  // ASCII-only on purpose (not \p{Letter}, which matches Thai script too): the slug ends up
+  // in revalidatePath() and, from there, an HTTP response header, and header values must be
+  // ByteString (Latin-1) — a Thai character throws "Cannot convert argument to a ByteString"
+  // at request time. A title that's entirely Thai (the normal case here) correctly reduces to
+  // "" below, which falls back to `post-${Date.now()}` in readBlogPostFields.
   return value
     .normalize("NFKC")
     .toLowerCase()
     .trim()
-    .replace(/[^\p{Letter}\p{Number}\s-]/gu, "")
+    .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
