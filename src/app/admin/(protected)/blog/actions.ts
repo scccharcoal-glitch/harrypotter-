@@ -84,11 +84,20 @@ function validateBlogPost(fields: ReturnType<typeof readBlogPostFields>): string
   return null;
 }
 
+// Defense in depth: slugify() only ever produces ASCII now, but `slugs` here can include a
+// post's *previous* slug fetched straight from the database — including any row saved before
+// that fix existed. revalidatePath() ends up passing the path through as an HTTP header value
+// (ByteString/Latin-1 only), so a leftover non-ASCII slug would crash the whole save instead of
+// just skipping a cache revalidation that wasn't reachable in a normal way anyway.
+function isSafeRevalidateSlug(slug: string): boolean {
+  return /^[a-z0-9-]+$/.test(slug);
+}
+
 function revalidateBlogPages(slugs: string[]) {
   revalidatePath("/blog");
   revalidatePath("/sitemap.xml");
   for (const slug of slugs) {
-    revalidatePath(`/blog/${slug}`);
+    if (isSafeRevalidateSlug(slug)) revalidatePath(`/blog/${slug}`);
   }
 }
 
